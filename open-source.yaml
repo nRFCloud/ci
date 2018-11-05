@@ -1,0 +1,52 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: CI resources for open-source packages on the nRFCloud GitHub organization
+Resources:
+  AWSLambdaLogging:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Name: aws-lambda-logging
+      Source:
+        Type: GITHUB
+        Location: https://github.com/nRFCloud/aws-lambda-logging.git
+        GitCloneDepth: 25
+        # Webhook: true -> https://forums.aws.amazon.com/thread.jspa?threadID=281481
+      BadgeEnabled: true
+      ServiceRole: !Ref CodeBuildRole
+      Artifacts:
+        Type: NO_ARTIFACTS
+      Environment:
+        Type: LINUX_CONTAINER
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/nodejs:8.11.0
+        EnvironmentVariables:
+        - Name: GH_USERNAME
+          Value: /codebuild/github-username
+          Type: PARAMETER_STORE
+        - Name: GH_TOKEN
+          Value: /codebuild/github-token
+          Type: PARAMETER_STORE
+        - Name: NPM_TOKEN
+          Value: /codebuild/npm-token
+          Type: PARAMETER_STORE
+      EncryptionKey: !Ref EncryptionKey
+      TimeoutInMinutes: 15
+  CodeBuildRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+        - Action: ['sts:AssumeRole']
+          Effect: Allow
+          Principal:
+            Service: [codebuild.amazonaws.com]
+        Version: '2012-10-17'
+      Path: /
+      ManagedPolicyArns:
+      - arn:aws:iam::aws:policy/AdministratorAccess
+  SourceCodeBucket:
+    Type: AWS::S3::Bucket
+Parameters:
+  EncryptionKey:
+    Description: The KMS encryption key
+    Type: String
+    Default: alias/aws/ssm
