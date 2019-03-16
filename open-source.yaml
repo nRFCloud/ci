@@ -88,6 +88,35 @@ Resources:
             Type: PARAMETER_STORE
       EncryptionKey: !Ref EncryptionKey
       TimeoutInMinutes: 15
+  PackageLayeredLambdas:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Name: package-layered-lambdas
+      Source:
+        Type: GITHUB
+        Location: https://github.com/nRFCloud/package-layered-lambdas.git
+        GitCloneDepth: 25
+        # Webhook: true -> https://forums.aws.amazon.com/thread.jspa?threadID=281481
+      BadgeEnabled: true
+      ServiceRole: !Ref CodeBuildRole
+      Artifacts:
+        Type: NO_ARTIFACTS
+      Environment:
+        Type: LINUX_CONTAINER
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/nodejs:8.11.0
+        EnvironmentVariables:
+          - Name: GH_USERNAME
+            Value: /codebuild/github-username
+            Type: PARAMETER_STORE
+          - Name: GH_TOKEN
+            Value: /codebuild/github-token
+            Type: PARAMETER_STORE
+          - Name: NPM_TOKEN
+            Value: /codebuild/npm-token
+            Type: PARAMETER_STORE
+      EncryptionKey: !Ref EncryptionKey
+      TimeoutInMinutes: 15
   CodeBuildRole:
     Type: AWS::IAM::Role
     Properties:
