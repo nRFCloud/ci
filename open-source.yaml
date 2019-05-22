@@ -9,7 +9,8 @@ Resources:
         Type: GITHUB
         Location: https://github.com/nRFCloud/aws-lambda-logging.git
         GitCloneDepth: 25
-        # Webhook: true -> https://forums.aws.amazon.com/thread.jspa?threadID=281481
+      Triggers:
+        Webhook: true
       BadgeEnabled: true
       ServiceRole: !Ref CodeBuildRole
       Artifacts:
@@ -38,7 +39,8 @@ Resources:
         Type: GITHUB
         Location: https://github.com/nRFCloud/application-protocols.git
         GitCloneDepth: 25
-        # Webhook: true -> https://forums.aws.amazon.com/thread.jspa?threadID=281481
+      Triggers:
+        Webhook: true
       BadgeEnabled: true
       ServiceRole: !Ref CodeBuildRole
       Artifacts:
@@ -67,7 +69,8 @@ Resources:
         Type: GITHUB
         Location: https://github.com/nRFCloud/bdd-feature-runner-aws.git
         GitCloneDepth: 25
-        # Webhook: true -> https://forums.aws.amazon.com/thread.jspa?threadID=281481
+      Triggers:
+        Webhook: true
       BadgeEnabled: true
       ServiceRole: !Ref CodeBuildRole
       Artifacts:
@@ -96,7 +99,8 @@ Resources:
         Type: GITHUB
         Location: https://github.com/nRFCloud/package-layered-lambdas.git
         GitCloneDepth: 25
-        # Webhook: true -> https://forums.aws.amazon.com/thread.jspa?threadID=281481
+      Triggers:
+        Webhook: true
       BadgeEnabled: true
       ServiceRole: !Ref CodeBuildRole
       Artifacts:
@@ -125,7 +129,8 @@ Resources:
         Type: GITHUB
         Location: https://github.com/nRFCloud/device-simulator.git
         GitCloneDepth: 25
-        # Webhook: true -> https://forums.aws.amazon.com/thread.jspa?threadID=281481
+      Triggers:
+        Webhook: true
       BadgeEnabled: true
       ServiceRole: !Ref CodeBuildRole
       Artifacts:
@@ -154,7 +159,8 @@ Resources:
         Type: GITHUB
         Location: https://github.com/nRFCloud/email-test-api.git
         GitCloneDepth: 25
-        # Webhook: true -> https://forums.aws.amazon.com/thread.jspa?threadID=281481
+      Triggers:
+        Webhook: true
       BadgeEnabled: true
       ServiceRole: !Ref CodeBuildRole
       Artifacts:
