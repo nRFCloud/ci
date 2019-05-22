@@ -172,6 +172,36 @@ Resources:
             Type: PARAMETER_STORE
       EncryptionKey: !Ref EncryptionKey
       TimeoutInMinutes: 15
+  FotaDeviceSimulator:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Name: fota-device-simulator
+      Source:
+        Type: GITHUB
+        Location: https://github.com/nRFCloud/fota-device-simulator.git
+        GitCloneDepth: 25
+      Triggers:
+        Webhook: true
+      BadgeEnabled: true
+      ServiceRole: !Ref CodeBuildRole
+      Artifacts:
+        Type: NO_ARTIFACTS
+      Environment:
+        Type: LINUX_CONTAINER
+        ComputeType: BUILD_GENERAL1_LARGE
+        Image: aws/codebuild/standard:2.0
+        EnvironmentVariables:
+          - Name: GH_USERNAME
+            Value: /codebuild/github-username
+            Type: PARAMETER_STORE
+          - Name: GH_TOKEN
+            Value: /codebuild/github-token
+            Type: PARAMETER_STORE
+          - Name: NPM_TOKEN
+            Value: /codebuild/npm-token
+            Type: PARAMETER_STORE
+      EncryptionKey: !Ref EncryptionKey
+      TimeoutInMinutes: 15
   CodeBuildRole:
     Type: AWS::IAM::Role
     Properties:
