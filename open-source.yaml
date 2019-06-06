@@ -178,13 +178,13 @@ Resources:
             Type: PARAMETER_STORE
       EncryptionKey: !Ref EncryptionKey
       TimeoutInMinutes: 15
-  FotaDeviceSimulator:
+  DfuDeviceSimulator:
     Type: AWS::CodeBuild::Project
     Properties:
-      Name: fota-device-simulator
+      Name: dfu-device-simulator
       Source:
         Type: GITHUB
-        Location: https://github.com/nRFCloud/fota-device-simulator.git
+        Location: https://github.com/nRFCloud/dfu-device-simulator.git
         GitCloneDepth: 25
       Triggers:
         Webhook: true
